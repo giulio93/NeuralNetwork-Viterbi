@@ -35,7 +35,7 @@ print('done')
 paths = set()
 for _, transcript in dataset:
     paths.add( ' '.join([index2label[index] for index in transcript]) )
-with open('results/grammar.txt', 'w') as f:
+with open(args.result_path+'grammar.txt', 'w') as f:
     f.write('\n'.join(paths) + '\n')
 
 ### actual nn-viterbi training #################################################
@@ -53,9 +53,9 @@ for i in range(10000):
     # save model every 1000 iterations
     if (i+1) % 1000 == 0:
         print('save snapshot ' + str(i+1))
-        network_file = args.decoding_path+'network.iter-' + str(i+1) + '.net'
-        length_file = args.decoding_path+'lengths.iter-' + str(i+1) + '.txt'
-        prior_file = args.decoding_path+'prior.iter-' + str(i+1) + '.txt'
+        network_file = args.result_path+'network.iter-' + str(i+1) + '.net'
+        length_file = args.result_path+'lengths.iter-' + str(i+1) + '.txt'
+        prior_file = args.result_path+'prior.iter-' + str(i+1) + '.txt'
         trainer.save_model(network_file, length_file, prior_file)
     # adjust learning rate after 2500 iterations
     if (i+1) == 2500:
